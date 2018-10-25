@@ -9,18 +9,10 @@ const routes: Routes = [
     path: '', 
     component: AdminComponent,
     children: [
-      { path: '', redirectTo: 'dashboard' },
-      { 
-        path: 'dashboard', 
-        loadChildren: './dashboard/dashboard.module#DashboardModule',
-        canLoad: [ AuthGuard ]
-      },
-      { 
-        path: 'login', 
-        component: LoginComponent
-      }
-    ],
-    pathMatch: 'full'
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule', canLoad: [ AuthGuard ] },
+      { path: 'login', component: LoginComponent }
+    ]
   }
 ];
 

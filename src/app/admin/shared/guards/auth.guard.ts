@@ -15,22 +15,16 @@ export class AuthGuard implements CanLoad, CanActivate {
 
     canActivate(next:ActivatedRouteSnapshot, state:RouterStateSnapshot) {
         // check if user is logged in
-        return this.usersService.checkLogged().pipe(
-            map(user => {
-                if (user) return true;
-            }),
-            catchError(error => {
-                this.toastr.error(error.error.error.message);
-                this.router.navigate(['/admin/login']);
-                return of(false);
-            })
-        );
+        console.log(111);
+        return true;
     }
 
     canLoad(route: Route): boolean {
+        console.log(this.usersService.logged);
         if (this.usersService.logged) {
             return true;
         } else {
+            console.log('not gg');
             this.toastr.error('Cannot load <b>' + route.path + '</b> module!');
             this.router.navigate(['/admin/login']);
             return false;

@@ -4,7 +4,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
     { path:'', loadChildren: './publisher/publisher.module#PublisherModule' },
-    { path: 'admin', loadChildren: './admin/admin.module#AdminModule', pathMatch: 'full' },
+    { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
     { path: '**', component: NotFoundComponent }
 ];
 

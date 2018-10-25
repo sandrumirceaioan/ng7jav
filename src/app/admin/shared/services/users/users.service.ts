@@ -13,29 +13,14 @@ const httpOptions = {
 })
 export class UsersService {
   apiPath = '/api/v1/admin/user/';
-  logged: Admin;
+  logged;
   
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this.logged = false;
+   }
 
-  checkLogged(): Observable<Admin> {
-    if (this.logged) {
-      return of(this.logged);
-    }
-    let params = {
-      token: localStorage.getItem('tokena'),
-      type: '2'
-    };
-    return this.http.post(this.apiPath + 'getCurrentUser', params, httpOptions).pipe(
-      map((result: Admin) => {
-          this.logged = result;
-          return result;
-      }),
-      catchError((error:HttpErrorResponse) => {
-        return throwError(error);
-      })
-    );
-  }
+
   
 }
