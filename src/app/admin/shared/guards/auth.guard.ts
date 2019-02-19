@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, CanActivate, Route, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UsersService } from '../services/users/users.service';
+import { AdminService } from '../services/admin/admin.service';
 import { of, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -10,25 +10,36 @@ export class AuthGuard implements CanLoad, CanActivate {
     constructor(
         private router: Router,
         private toastr: ToastrService,
-        private usersService: UsersService
+        private adminService: AdminService
     ){ }
 
-    canActivate(next:ActivatedRouteSnapshot, state:RouterStateSnapshot) {
+    canActivate(next:ActivatedRouteSnapshot, state:RouterStateSnapshot): Observable<boolean> {
         // check if user is logged in
-        console.log(111);
-        return true;
+        return this.adminService.checkLogged().pipe(
+            map(user => {
+                if (user) return true;
+            }),
+            catchError(error => {
+                this.toastr.error(error.message);
+                this.router.navigate(['/admin/login']);
+                return of(false);
+            })
+        );
+
     }
 
-    canLoad(route: Route): boolean {
-        console.log(this.usersService.logged);
-        if (this.usersService.logged) {
-            return true;
-        } else {
-            console.log('not gg');
-            this.toastr.error('Cannot load <b>' + route.path + '</b> module!');
-            this.router.navigate(['/admin/login']);
-            return false;
-        }
+
+    canLoad(route: Route): Observable<boolean> {
+        // check if user is logged in
+        return this.adminService.checkLogged().pipe(
+            map(user => {
+                if (user) return true;
+            }),
+            catchError(error => {
+                this.router.navigate(['/admin/login']);
+                return of(false);
+            })
+        );
     }
 
 }

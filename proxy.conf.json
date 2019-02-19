@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://localhost:4000",
+      "target": "http://backend.refactor.javandi.com",
       "secure": false,
       "changeOrigin": true
     }

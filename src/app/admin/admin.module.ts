@@ -5,11 +5,13 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminRoutingModule } from './admin.routing';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [AdminComponent, LoginComponent],
   providers: [AuthGuard]
